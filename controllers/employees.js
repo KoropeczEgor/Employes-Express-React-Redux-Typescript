@@ -24,18 +24,24 @@ const add = async (req, res) => {
   try {
     const data = req.body;
 
-    if (!data.firstName || !data.lastname || !data.adress || !data.age) {
+    if (!data.firstName || !data.LastName || !data.adress || !data.age) {
       return res.status(400).json({ message: "Все поля обязательные" });
     }
 
-    const employees = await prisma.user.update({
-      where: {
-        id: req.user.id,
-      },
+    // await prisma.user.update({
+    //   where: {
+    //     id: req.user.id,
+    //   },
+    //   data: {
+    //     createdEmployee: {
+    //       create: data,
+    //     },
+    //   },
+    // });
+    const employees = await prisma.employee.create({
       data: {
-        createdEmployee: {
-          create: data,
-        },
+        ...data,
+        userId: req.user.id,
       },
     });
 
