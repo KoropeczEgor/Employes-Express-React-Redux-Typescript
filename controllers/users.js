@@ -9,33 +9,39 @@ const jwt = require("jsonwebtoken");
  * @access Pablic
  */
 const login = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res
-      .status(400)
-      .json({ massege: "Пожалуйста, заполните обязательные поля" });
-  }
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ massege: "Пожалуйста, заполните обязательные поля" });
+    }
 
-  const user = await prisma.user.findFirst({
-    //where - мы ищем если у нас в базе данный такой же email
-    where: {
-      email,
-    },
-  });
-
-  const isPasswordCorrect =
-    user && (await brypt.compare(password, user.password));
-  const secret = process.env.JWT_SECRET;
-
-  if (user && isPasswordCorrect && secret) {
-    res.status(200).json({
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      token: jwt.sign({ id: user.id }, secret, { expiresIn: "30d" }),
+    const user = await prisma.user.findFirst({
+      //where - мы ищем если у нас в базе данный такой же email
+      where: {
+        email,
+      },
     });
-  } else {
-    return res.status(400).json({ massege: "Неверно введен логин или пароль" });
+
+    const isPasswordCorrect =
+      user && (await brypt.compare(password, user.password));
+    const secret = process.env.JWT_SECRET;
+
+    if (user && isPasswordCorrect && secret) {
+      res.status(200).json({
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        token: jwt.sign({ id: user.id }, secret, { expiresIn: "30d" }),
+      });
+    } else {
+      return res
+        .status(400)
+        .json({ massege: "Неверно введен логин или пароль" });
+    }
+  } catch {
+    res.status(500).json({ message: "Что-то пошло не так" });
   }
 };
 
@@ -47,48 +53,54 @@ const login = async (req, res) => {
  */
 //next в данном ключе говорит-вызове следующею функцию
 const register = async (req, res, next) => {
-  const { email, password, name } = req.body;
+  try {
+    const { email, password, name } = req.body;
 
-  if (!email || !password || !name) {
-    return res
-      .send(400)
-      .json({ massege: "Пожалуйста, заполните обязательные поля" });
-  }
+    if (!email || !password || !name) {
+      return res
+        .send(400)
+        .json({ massege: "Пожалуйста, заполните обязательные поля" });
+    }
 
-  const registeredUser = await prisma.user.findFirst({
-    where: {
-      email,
-    },
-  });
-
-  if (registeredUser) {
-    return res
-      .status(400)
-      .json({ massege: "Пользватель, с таким email ужу существует " });
-  }
-  // Шифровка password
-  const salt = await brypt.genSalt(10);
-  const hashedPassword = await brypt.hash(password, salt);
-  //Создаем пользователя и текущими данными
-  const user = await prisma.user.create({
-    data: {
-      email,
-      name,
-      password: hashedPassword,
-    },
-  });
-  //secret - это string который нельзя никому показывать
-  const secret = process.env.JWT_SECRET;
-
-  if (user && secret) {
-    res.status(201).json({
-      id: user.id,
-      email: user.email,
-      name,
-      token: jwt.sign({ id: user.id }, secret, { expiresIn: "30d" }),
+    const registeredUser = await prisma.user.findFirst({
+      where: {
+        email,
+      },
     });
-  } else {
-    return res.status(400).json({ massege: "Не удалось создать пользователя" });
+
+    if (registeredUser) {
+      return res
+        .status(400)
+        .json({ massege: "Пользватель, с таким email ужу существует " });
+    }
+    // Шифровка password
+    const salt = await brypt.genSalt(10);
+    const hashedPassword = await brypt.hash(password, salt);
+    //Создаем пользователя и текущими данными
+    const user = await prisma.user.create({
+      data: {
+        email,
+        name,
+        password: hashedPassword,
+      },
+    });
+    //secret - это string который нельзя никому показывать
+    const secret = process.env.JWT_SECRET;
+
+    if (user && secret) {
+      res.status(201).json({
+        id: user.id,
+        email: user.email,
+        name,
+        token: jwt.sign({ id: user.id }, secret, { expiresIn: "30d" }),
+      });
+    } else {
+      return res
+        .status(400)
+        .json({ massege: "Не удалось создать пользователя" });
+    }
+  } catch {
+    res.status(500).json({ message: "Что-то пошло не так" });
   }
 };
 /**
