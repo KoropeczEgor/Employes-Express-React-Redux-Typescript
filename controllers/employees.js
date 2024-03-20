@@ -28,16 +28,6 @@ const add = async (req, res) => {
       return res.status(400).json({ message: "Все поля обязательные" });
     }
 
-    // await prisma.user.update({
-    //   where: {
-    //     id: req.user.id,
-    //   },
-    //   data: {
-    //     createdEmployee: {
-    //       create: data,
-    //     },
-    //   },
-    // });
     const employees = await prisma.employee.create({
       data: {
         ...data,
@@ -50,8 +40,75 @@ const add = async (req, res) => {
     res.status(400).json({ message: "Что-то пощло не так" });
   }
 };
+/**
+ @rote POST /api/employees/remove/:id
+ @desc Удаление сотрудника 
+ @access Private
+ */
+const remove = async (req, res) => {
+  const { id } = req.body;
 
+  try {
+    await prisma.employee.delete({
+      where: {
+        id,
+      },
+    });
+
+    res.status(204).json("OK");
+  } catch {
+    res.status(400).json({ message: "Не удалось удалить сотрудника" });
+  }
+};
+
+/**
+ @rote PUT /api/employees/edit/:id
+ @desc Редактирование сотрудников
+ @access Private
+ */
+
+const edit = async (req, res) => {
+  const data = req.body;
+  const id = data.id;
+
+  try {
+    await prisma.employee.update({
+      wher: {
+        id,
+      },
+      data,
+    });
+
+    res.status(204).json("OK");
+  } catch (error) {
+    res.status(400).json({ massege: "Не удалось редактировать сотрудника" });
+  }
+};
+
+/**
+ @rote GET /api/employees/employees/:id
+ @desc Получение сотрудников
+ @access Private
+ */
+const employee = async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const employee = await prisma.employee.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    res.status(400).json(employee);
+  } catch {
+    res.status(400).json({ message: "Не удалось получить сотрудника" });
+  }
+};
 module.exports = {
   all,
   add,
+  remove,
+  edit,
+  employee,
 };
