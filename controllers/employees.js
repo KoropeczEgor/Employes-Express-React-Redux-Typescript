@@ -86,12 +86,12 @@ const edit = async (req, res) => {
 };
 
 /**
- @rote GET /api/employees/employees/:id
+ @rote GET /api/employees/:id
  @desc Получение сотрудников
  @access Private
  */
 const employee = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   try {
     const employee = await prisma.employee.findUnique({
