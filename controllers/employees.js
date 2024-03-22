@@ -73,13 +73,13 @@ const edit = async (req, res) => {
 
   try {
     await prisma.employee.update({
-      wher: {
+      where: {
         id,
       },
       data,
     });
 
-    res.status(204).json("OK");
+    res.status(204).send("OK");
   } catch (error) {
     res.status(400).json({ massege: "Не удалось редактировать сотрудника" });
   }

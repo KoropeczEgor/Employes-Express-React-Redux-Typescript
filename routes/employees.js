@@ -12,16 +12,16 @@ const {
 // /api/employees
 router.get("/", auth, all);
 
-// /api/employsees/:id
+// /api/employees/:id
 router.get("/:id", auth, employee);
 
-// /api/employsess/add
+// /api/employees/add
 router.post("/add", auth, add);
 
-// /api/employsess/remove/:id
+// /api/employees/remove/:id
 router.post("/remove/:id", auth, remove);
 
-// /api/employsess/edit/:id
-router.post("/edit/:id", auth, edit);
+// /api/employees/edit/:id
+router.put("/edit/:id", auth, edit);
 
 module.exports = router;
