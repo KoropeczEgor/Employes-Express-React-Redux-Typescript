@@ -7,3 +7,4 @@ export const Paths = {
     login: '/login',
     register: "/register"
 } as const;
+//as const позволяет отображать пути при наведении на paths
