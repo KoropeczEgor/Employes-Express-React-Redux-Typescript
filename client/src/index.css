@@ -6,8 +6,18 @@
     box-sizing: border-box;
 }
 
+html,
+body,
+body > div {
+    height: 100%;
+}
+
 body {
     font-family: "Merienda", sans-serif;
     background-color: #111;
-    color: #ffffff;
+    color: rgb(255, 255, 255);
+}
+
+a {
+    text-decoration: none;
 }
