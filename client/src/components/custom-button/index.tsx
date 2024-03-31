@@ -1,6 +1,7 @@
 import React from 'react'
 import {Button, Form} from 'antd'
 
+
 type Props = {
     children: React.ReactNode;
     htmlType?: "button" | "submit" | "reset" | undefined;
@@ -20,7 +21,8 @@ export const CustomButton = ({
     loading,
     shape,
     icon,
-    onClick
+    onClick,
+    
 }: Props) => {
   return (
     <Form.Item>

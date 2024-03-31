@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout, Space, Typography } from 'antd'
-import { TeamOutlined } from '@ant-design/icons'
+import { LoginOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons'
 import { CustomButton } from '../custom-button'
 import { Link } from 'react-router-dom'
 import { Paths } from '../../paths'
@@ -14,7 +14,9 @@ export const Header = () => {
       <Space>
         <TeamOutlined className={styles.teamIcons}/>
         <Link to={Paths.home}>
-        <CustomButton type='primary'>
+        <CustomButton 
+        type='link' 
+        >
           <Typography.Title level={1}>
             Сотридников
           </Typography.Title>
@@ -24,12 +26,12 @@ export const Header = () => {
       {/* //Space это расстояние между  */}
       <Space>
         <Link to={Paths.register}>
-          <CustomButton type="primary">
+          <CustomButton type="primary" icon={<LoginOutlined/>}>
             Зарегистрировать
           </CustomButton>
         </Link>
         <Link to={Paths.login}>
-          <CustomButton type="primary">
+          <CustomButton type="primary" icon={<UserOutlined/>}>
             Войти
           </CustomButton>
         </Link>
