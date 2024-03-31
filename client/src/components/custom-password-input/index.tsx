@@ -27,18 +27,25 @@ export const CustomPasswordInput = ({
             }
 
             if(name === 'confirmPassword') {
-                if(!value || getFieldValue(('password')) === value) {
+                if(!value || getFieldValue('password') === value) {
                     return Promise.resolve()
                 }
                 
-                return Promise.reject(new Error('Пароль не совподают'))
+                return Promise.reject(
+                    new Error('Пароль не совподают')
+                );
             } else {
                 if(value.length < 6) {
-                    return Promise.reject(new Error('Пароль должен быть длиннее 6-ти символов'))
+                    return Promise.reject(
+                        new Error('Пароль должен быть длиннее 6-ти символов')
+                    );
                 }
+
+                return Promise.resolve();
             }
-        }
-    })]}
+        },
+    }),
+]}
     >
         <Input.Password
         placeholder={placeholder}

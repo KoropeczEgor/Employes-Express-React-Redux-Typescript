@@ -16,7 +16,7 @@ export const Register = () => {
             <CustomInput type="text" name='name' placeholder='Имя'/>
             <CustomInput type="email" name='email' placeholder='Email'/>
             <CustomPasswordInput name='password' placeholder='Пароль'/>
-            <CustomPasswordInput name='canfirmPassword' placeholder='Повторите пароль'/>
+            <CustomPasswordInput name='confirmPassword' placeholder='Повторите пароль'/>
             <CustomButton type='primary' htmlType='submit'>
             Зарегистрируйтесь
             </CustomButton>
