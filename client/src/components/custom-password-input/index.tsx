@@ -18,7 +18,7 @@ export const CustomPasswordInput = ({
     name={name}
     dependencies={dependencies}
     hasFeedback={true}
-    rules={[{required: true, message: 'Обязательное поле'},
+    rules={[{required: true, message: 'Обязательное поле!'},
     //Взято из And Design FORM "passworld"
     ({getFieldValue}) => ({
         validator(_, value) {
