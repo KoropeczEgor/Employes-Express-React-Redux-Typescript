@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, Form, Row, Space, Typography } from "antd";
 import { useState, useEffect } from "react";
@@ -10,7 +9,7 @@ import { CustomInput } from "../../components/custom-input";
 import { CustomPasswordInput } from "../../components/custom-password-input";
 import { CustomButton } from "../../components/custom-button";
 import { Paths } from "../../paths";
-
+import { selectUser } from "../../features/auth/authSlice";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -18,21 +17,34 @@ export const Login = () => {
   const user = useSelector(selectUser);
   const [loginUser, loginUserResult] = useLoginMutation();
 
-  const login = async(data: UserData) => {
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
+  const login = async (data: UserData) => {
     try {
       await loginUser(data).unwrap();
 
-
+      navigate("/");
+    } catch {
+      console.error("erroe");
     }
-  }
+  };
+
   return (
     <Layout>
       <Row align="middle" justify="center">
         <Card title="Войдите" style={{ width: "30rem" }}>
-          <Form onFinish={() => null}>
+          <Form onFinish={login}>
             <CustomInput type="email" name="email" placeholder="Email" />
             <CustomPasswordInput name="password" placeholder="Пароль" />
-            <CustomButton type="primary" htmlType="submit">
+            <CustomButton
+              type="primary"
+              htmlType="submit"
+              loading={loginUserResult.isLoading}
+            >
               Войти
             </CustomButton>
           </Form>
