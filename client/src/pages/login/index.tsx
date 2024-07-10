@@ -10,10 +10,12 @@ import { CustomPasswordInput } from "../../components/custom-password-input";
 import { CustomButton } from "../../components/custom-button";
 import { Paths } from "../../paths";
 import { selectUser } from "../../features/auth/authSlice";
+import { isErrorWithMessage } from "../../utils/is-error-message";
+import { ErrorMessage } from "../../components/error-message";
 
 export const Login = () => {
   const navigate = useNavigate();
-  const [error, setErroe] = useState("");
+  const [error, setError] = useState("");
   const user = useSelector(selectUser);
   const [loginUser, loginUserResult] = useLoginMutation();
 
@@ -28,8 +30,14 @@ export const Login = () => {
       await loginUser(data).unwrap();
 
       navigate("/");
-    } catch {
-      console.error("erroe");
+    } catch (error) {
+      const maybeError = isErrorWithMessage(error);
+
+      if (maybeError) {
+        setError(error.data.message);
+      } else {
+        setError("Неизвестная ошибка");
+      }
     }
   };
 
@@ -52,6 +60,7 @@ export const Login = () => {
             <Typography.Text>
               Нет аккаунта? <Link to={Paths.register}>Зарегистрируйтесь</Link>
             </Typography.Text>
+            <ErrorMessage message={error} />
           </Space>
         </Card>
       </Row>
