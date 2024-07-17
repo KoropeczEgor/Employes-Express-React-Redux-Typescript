@@ -1,4 +1,4 @@
-const { prisma } = require("../prisma/prisma-client");
+const { prisma } = require('../prisma/prisma-client');
 
 /**
  @rote Get /api/employees
@@ -11,7 +11,7 @@ const all = async (req, res) => {
 
     res.status(200).json({ employees });
   } catch {
-    res.status(400).json({ message: "Не удалось получить сотрудников" });
+    res.status(400).json({ message: 'Не удалось получить сотрудников' });
   }
 };
 
@@ -24,8 +24,8 @@ const add = async (req, res) => {
   try {
     const data = req.body;
 
-    if (!data.firstName || !data.LastName || !data.adress || !data.age) {
-      return res.status(400).json({ message: "Все поля обязательные" });
+    if (!data.firstName || !data.LastName || !data.address || !data.age) {
+      return res.status(400).json({ message: 'Все поля обязательные' });
     }
 
     const employees = await prisma.employee.create({
@@ -37,7 +37,7 @@ const add = async (req, res) => {
 
     return res.status(201).json(employees);
   } catch {
-    res.status(400).json({ message: "Что-то пощло не так" });
+    res.status(400).json({ message: 'Что-то пощло не так' });
   }
 };
 /**
@@ -55,9 +55,9 @@ const remove = async (req, res) => {
       },
     });
 
-    res.status(204).json("OK");
+    res.status(204).json('OK');
   } catch {
-    res.status(400).json({ message: "Не удалось удалить сотрудника" });
+    res.status(400).json({ message: 'Не удалось удалить сотрудника' });
   }
 };
 
@@ -79,9 +79,9 @@ const edit = async (req, res) => {
       data,
     });
 
-    res.status(204).send("OK");
+    res.status(204).send('OK');
   } catch (error) {
-    res.status(400).json({ massege: "Не удалось редактировать сотрудника" });
+    res.status(400).json({ massege: 'Не удалось редактировать сотрудника' });
   }
 };
 
@@ -102,7 +102,7 @@ const employee = async (req, res) => {
 
     res.status(400).json(employee);
   } catch {
-    res.status(400).json({ message: "Не удалось получить сотрудника" });
+    res.status(400).json({ message: 'Не удалось получить сотрудника' });
   }
 };
 module.exports = {
