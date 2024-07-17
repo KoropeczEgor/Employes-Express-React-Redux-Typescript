@@ -1,17 +1,18 @@
-import React from "react";
-import reportWebVitals from "./reportWebVitals";
-import { createRoot } from "react-dom/client";
-import { Provider } from "react-redux";
-import { store } from "./app/store";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Paths } from "./paths";
-import { Login } from "./pages/login";
-import { Employee } from "./pages/employee";
-import { Status } from "./pages/status";
-import { Register } from "./pages/register";
-import { ConfigProvider, theme } from "antd";
+import React from 'react';
+import reportWebVitals from './reportWebVitals';
+import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { store } from './app/store';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Paths } from './paths';
+import { Login } from './pages/login';
+import { Employee } from './pages/employee';
+import { Status } from './pages/status';
+import { Register } from './pages/register';
+import { ConfigProvider, theme } from 'antd';
 
-import "./index.css";
+import './index.css';
+import { AddEmployee } from './pages/add-employee';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
+    path: Paths.empolyeeAdd,
+    element: <AddEmployee />,
+  },
+  {
     path: `${Paths.employee}/:id`,
     element: <Employee />,
   },
@@ -35,7 +40,7 @@ const router = createBrowserRouter([
     element: <Status />,
   },
 ]);
-const container = document.getElementById("root")!;
+const container = document.getElementById('root')!;
 const root = createRoot(container);
 
 root.render(
