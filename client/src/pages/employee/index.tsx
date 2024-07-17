@@ -66,7 +66,7 @@ export const Employee = () => {
         <Descriptions.Item label='Возраст' span={3}>
           {data.age}
         </Descriptions.Item>
-        <Descriptions.Item label='Адресс' span={3}>
+        <Descriptions.Item label='Адрес' span={3}>
           {data.address}
         </Descriptions.Item>
       </Descriptions>
