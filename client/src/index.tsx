@@ -7,6 +7,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Paths } from './paths';
 import { Login } from './pages/login';
 import { Employee } from './pages/employee';
+import { Employees } from './pages/employees';
 import { Status } from './pages/status';
 import { Register } from './pages/register';
 import { ConfigProvider, theme } from 'antd';
@@ -18,7 +19,7 @@ import { EditEmployee } from './pages/edit-employee';
 const router = createBrowserRouter([
   {
     path: Paths.home,
-    element: <h1>Home</h1>,
+    element: <Employees />,
   },
   {
     path: Paths.login,
