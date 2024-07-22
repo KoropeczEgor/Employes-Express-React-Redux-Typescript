@@ -1,5 +1,5 @@
-import React from "react";
-import { Alert, message } from "antd";
+import React from 'react';
+import { Alert } from 'antd';
 
 type Props = {
   message?: string;
@@ -10,5 +10,5 @@ export const ErrorMessage = ({ message }: Props) => {
     return null;
   }
 
-  return <Alert message={message} type="error" />;
+  return <Alert message={message} type='error' />;
 };
